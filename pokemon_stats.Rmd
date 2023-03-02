@@ -1,0 +1,135 @@
+---
+title: "Pokemon"
+author: "John Cruz"
+date: "2023-03-01"
+output: pdf_document
+url_color: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+National Pokedex
+
+[Pokemon Stats](https://www.serebii.net/pokemon/nationalpokedex.shtml)
+
+[Pokemon Types](https://m.bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_National_Pok%C3%A9dex_number)
+
+A few kinds of analysis that could be done would be:
+
+to look at which types of Pokémon tend to have the highest base stats
+to find the 6 Pokémon with the highest base speed
+to observe whether Pokémon with a single type have higher base stats than Pokémon with two types
+to observe the frequency of Pokémon by type
+to find the 10 rarest Pokémon abilities, i.e. the abilities that the fewest number of Pokémon have access to
+
+
+```{r library, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(rvest)
+library(xml2)
+library(janitor)
+```
+
+```{r read-url-pokemon-stats}
+url <- "https://www.serebii.net/pokemon/nationalpokedex.shtml"
+
+web_table <- read_html(url) 
+
+# use XML to account for <br> with abilities and add '\n'
+xml_find_all(web_table, ".//br") |> 
+  xml_add_sibling("p", "\n")
+xml_find_all(web_table, ".//br") |> 
+  xml_remove() 
+
+web_table <- 
+  web_table |> 
+  html_element('.dextable') |> 
+  html_table()
+
+pokemon_stats <- as.data.frame(web_table)
+
+```
+
+
+
+```{r tidy-pokemon-stats}
+
+# drop null values if Pokemon name is N/A
+stats_df <- 
+  pokemon_stats |> 
+  drop_na(4)
+
+# drop first row (duplicate header) and second column (pic)
+stats_df <- stats_df[-1,-2]
+
+# set column headers from first row and clean names
+stats_df <- 
+  stats_df |> 
+  row_to_names(row_number = 1) |> 
+  clean_names()
+
+# shift pokemon names, etc to left by 1 column
+stats_df[c(2:10)] = stats_df[, c(3:11)]
+
+# split multiple abilities into long format based on created '\n'
+stats_df <- 
+  stats_df |> 
+  separate_longer_delim(abilities, delim = "\n")
+
+stats_df$no <-
+  parse_number(stats_df$no)
+
+```
+
+
+
+```{r read-url-pokemon-types}
+url <- "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_National_Pok%C3%A9dex_number"
+
+web_table <- read_html(url) 
+
+# use XML to account for <br> and replace with '\n'
+xml_find_all(web_table, ".//br") |> 
+  xml_add_sibling("p", "\n")
+xml_find_all(web_table, ".//br") |> 
+  xml_remove() 
+
+web_table <- 
+  web_table |> 
+  html_element('body') |> 
+  html_table()
+
+pokemon_types <- as.data.frame(web_table)
+```
+
+
+
+```{r tidy-pokemon-types}
+
+pokemon_types
+
+
+
+
+
+
+```
+
+
+
+
+
+```{r test}
+df <- tibble(
+  x = 1:3,
+  y = c("a", "d,e,f", "g,h"),
+  z = c("1", "2,3,4", "5,6")
+)
+df %>%
+  separate_longer_delim(c(y, z), delim = ",")
+
+```
