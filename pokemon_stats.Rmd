@@ -80,6 +80,7 @@ stats_df <-
   stats_df |> 
   separate_longer_delim(abilities, delim = "\n")
 
+# change to pokemon number
 stats_df$no <-
   parse_number(stats_df$no)
 
@@ -110,11 +111,29 @@ pokemon_types <- as.data.frame(web_table)
 
 ```{r tidy-pokemon-types}
 
-pokemon_types
+# drop null values if Pokemon name is N/A
+types_df <- 
+  pokemon_types |> 
+  drop_na(2)
 
+# drop unnecessary columns
+types_df <- 
+  types_df[, 1:5]
 
+# set column headers from first row and clean names
+types_df <- 
+  types_df |> 
+  row_to_names(row_number = 1) |> 
+  clean_names()
 
+# change to pokemon number
+types_df$ndex <-
+  parse_number(types_df$ndex)
 
+# drop N/A pokemon number
+types_df <- 
+  types_df |> 
+  drop_na()
 
 
 ```
