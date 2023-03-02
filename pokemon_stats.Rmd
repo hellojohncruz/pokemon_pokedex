@@ -23,9 +23,10 @@ A few kinds of analysis that could be done would be:
 to look at which types of Pokémon tend to have the highest base stats
 to find the 6 Pokémon with the highest base speed
 to observe whether Pokémon with a single type have higher base stats than Pokémon with two types
-to observe the frequency of Pokémon by type
+
 to find the 10 rarest Pokémon abilities, i.e. the abilities that the fewest number of Pokémon have access to
 
+## Required Libraries
 
 ```{r library, warning=FALSE, message=FALSE}
 library(tidyverse)
@@ -177,7 +178,7 @@ stats_types_df <-
   relocate(type, .after = name)
 ```
 
-
+## to observe the frequency of Pokémon by type
 
 ```{r plot}
 stats_types_df |> 
