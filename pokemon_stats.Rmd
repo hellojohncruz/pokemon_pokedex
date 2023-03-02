@@ -114,7 +114,7 @@ pokemon_types <- as.data.frame(web_table)
 
 
 
-```{r tidy-pokemon-types, warning=FALSE}
+```{r tidy-pokemon-types, warning=FALSE, message=FALSE}
 
 # drop null values if Pokemon name is N/A
 types_df <- 
@@ -170,7 +170,7 @@ types_df <-
 
 
 
-```{r merged-stats-types}
+```{r merged-stats-types, message=FALSE, warning=FALSE}
 stats_types_df <-  
   stats_df |> 
   inner_join(types_df) |> 
@@ -180,15 +180,15 @@ stats_types_df <-
 ## to observe the frequency of Pokémon by type
 
 ```{r plot}
-stats_types_df |> 
-  group_by(type) |> 
-  summarise(count = n()) |> 
-  ggplot(aes(x = count, y = reorder(type, count))) +
-  geom_bar(stat = 'identity')
-
-stats_types_df |> 
+grouped_type <-  
+  stats_types_df |> 
   group_by(type) |> 
   summarise(count = n()) |> 
     arrange(desc(count))
-  
+
+grouped_type |> 
+  ggplot(aes(x = count, y = reorder(type, count))) +
+  geom_bar(stat = 'identity')
+
+knitr::kable(grouped_type)
 ```
