@@ -75,6 +75,11 @@ stats_df <-
 # shift pokemon names, etc to left by 1 column
 stats_df[c(2:10)] = stats_df[, c(3:11)]
 
+# drop 'na' column
+stats_df <- 
+  stats_df |> 
+  select(!c(na, type))
+
 # split multiple abilities into long format based on created '\n'
 stats_df <- 
   stats_df |> 
@@ -109,7 +114,7 @@ pokemon_types <- as.data.frame(web_table)
 
 
 
-```{r tidy-pokemon-types}
+```{r tidy-pokemon-types, warning=FALSE}
 
 # drop null values if Pokemon name is N/A
 types_df <- 
@@ -130,25 +135,56 @@ types_df <-
 types_df$ndex <-
   parse_number(types_df$ndex)
 
-# drop N/A pokemon number
+# drop N/A or zero (0) while keeping only distinct pokemon numbers
 types_df <- 
   types_df |> 
-  drop_na()
+  drop_na() |> 
+  filter(ndex != 0) |> 
+  distinct(ndex, .keep_all=TRUE)
 
+# within same pokemon number, replace repeated types with N/A
+types_df <- 
+  types_df |> 
+  mutate(type_2 = if_else(type_2 != type, type_2, NA)) |> 
+  select(-c(2)) |> 
+  rename(no = ndex)
+
+# melt both type columns into one column
+temp1 <- 
+  types_df |> 
+  select(1:3)
+
+temp2 <- 
+  types_df |> 
+  select(1,2,4) |> 
+  rename(type = type_2)
+
+types_df <- 
+  temp1 |> 
+  full_join(temp2) |>
+  drop_na() |> 
+  select(!pokemon) |> 
+  arrange(no)
 
 ```
 
 
 
+```{r merged-stats-types}
+stats_types_df <-  
+  stats_df |> 
+  inner_join(types_df) |> 
+  relocate(type, .after = name)
+```
 
 
-```{r test}
-df <- tibble(
-  x = 1:3,
-  y = c("a", "d,e,f", "g,h"),
-  z = c("1", "2,3,4", "5,6")
-)
-df %>%
-  separate_longer_delim(c(y, z), delim = ",")
 
+```{r plot}
+stats_types_df |> 
+  group_by(type) |> 
+  summarise(count = n()) |> 
+  arrange(desc(count)) |> 
+  ggplot(aes(x = count, y = type)) +
+  geom_bar(stat = 'identity')
+  
 ```
