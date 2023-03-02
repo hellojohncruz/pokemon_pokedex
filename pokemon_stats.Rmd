@@ -183,8 +183,12 @@ stats_types_df <-
 stats_types_df |> 
   group_by(type) |> 
   summarise(count = n()) |> 
-  arrange(desc(count)) |> 
-  ggplot(aes(x = count, y = type)) +
+  ggplot(aes(x = count, y = reorder(type, count))) +
   geom_bar(stat = 'identity')
+
+stats_types_df |> 
+  group_by(type) |> 
+  summarise(count = n()) |> 
+    arrange(desc(count))
   
 ```
