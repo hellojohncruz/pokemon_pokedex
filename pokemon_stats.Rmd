@@ -2,7 +2,9 @@
 title: "Pokemon"
 author: "John Cruz"
 date: "2023-03-01"
-output: pdf_document
+output: 
+  html_document: default
+  pdf_document: default
 url_color: blue
 ---
 
@@ -10,20 +12,13 @@ url_color: blue
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Introduction
 
-National Pokedex
+The Serebii website provides a list, called the National Pokedex, of all the Pokemon in all the games. The table breaks down each Pokemon with a unique ID number, name, type, abilities and base stats such as attack and defense.  
 
-[Pokemon Stats](https://www.serebii.net/pokemon/nationalpokedex.shtml)
+**Data Sources:** [Pokemon Stats](https://www.serebii.net/pokemon/nationalpokedex.shtml)
 
-[Pokemon Types](https://m.bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_National_Pok%C3%A9dex_number)
-
-A few kinds of analysis that could be done would be:
-
-to look at which types of Pokémon tend to have the highest base stats
-to find the 6 Pokémon with the highest base speed
-to observe whether Pokémon with a single type have higher base stats than Pokémon with two types
-to find the 10 rarest Pokémon abilities, i.e. the abilities that the fewest number of Pokémon have access to
+Lets determine a frequency chart of which Pokemon fall into which types they are. 
 
 ## Required Libraries
 
@@ -33,6 +28,14 @@ library(rvest)
 library(xml2)
 library(janitor)
 ```
+
+---
+
+## Web Scrape Table into Data Frame
+
+At first, when the table was web scraped, it brought in the values into a Data Frame, however, I quickly realized that the abilities listed multiple ones and the *rvest()* package cleaned it up by adding a space between them. This causes issues as some abilities are multiple words so to string manipulate them, I needed to account for the built-in HTML line breaks (<br>). To do this, I used XML to add an intentional new line character (\n), so that I could be able to break them apart later. 
+
+[Using XML](https://stackoverflow.com/questions/30921626/can-rvest-keep-inline-html-tags-such-as-br-using-html-table)
 
 ```{r read-url-pokemon-stats}
 url <- "https://www.serebii.net/pokemon/nationalpokedex.shtml"
@@ -52,9 +55,17 @@ web_table <-
 
 pokemon_stats <- as.data.frame(web_table)
 
+knitr::kable(head(pokemon_stats))
+
 ```
 
+---
 
+## Tidy Up Data
+
+Every other row that was brought into the Data Frame had *N/A* values. I removed these rows where if any Pokemon didn't have a name, it was dropped. The columns between *Name* and the *Base Stats* also were shifted to the right by one column. Using a vector, I moved the columns to the appropriate alignment and followed it by using the *janiotr* package to clean up column names. To account for multiple abilities, the data frame was then unpivoted into a longer format for each Pokemon. 
+
+**Note:** Pokemon types are missing and the column was dropped. It will be explained in the following section.
 
 ```{r tidy-pokemon-stats}
 
@@ -89,9 +100,15 @@ stats_df <-
 stats_df$no <-
   parse_number(stats_df$no)
 
+knitr::kable(head(stats_df))
+
 ```
 
-[Working with HTML <br>](https://stackoverflow.com/questions/30921626/can-rvest-keep-inline-html-tags-such-as-br-using-html-table)
+---
+
+## Pokemon Types Missing
+
+While working on the Data Frame, I realized the Pokemon types were missing. Looking into the HTML code, they types were not text, but images with no conventional tag name for each one. Beause of this, I used another website that provides that information and web scraped similarly into another Data Frame.
 
 ```{r read-url-pokemon-types}
 url <- "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_National_Pok%C3%A9dex_number"
@@ -110,9 +127,11 @@ web_table <-
   html_table()
 
 pokemon_types <- as.data.frame(web_table)
+
+knitr::kable(head(pokemon_types))
 ```
 
-
+Since each Pokemon has a unique identifier, I created the data frame to relate this ID to its types. 
 
 ```{r tidy-pokemon-types, warning=FALSE, message=FALSE}
 
@@ -166,22 +185,33 @@ types_df <-
   select(!pokemon) |> 
   arrange(no)
 
+knitr::kable(head(types_df))
+
 ```
 
+## Merge Pokemon Stats and Types Tables
 
+Using a similar way of SQL joins, I merged the Pokemon to its types and stats. 
 
 ```{r merged-stats-types, message=FALSE, warning=FALSE}
 stats_types_df <-  
   stats_df |> 
   inner_join(types_df) |> 
   relocate(type, .after = name)
+
+knitr::kable(head(stats_types_df))
 ```
 
-## to observe the frequency of Pokémon by type
+---
+
+## Pokemon Type Frequency
+
+The frequency chart shows us that *Water, Normal and Grass* types are the most common among all the Pokemon. One caveat to point out, is that a Pokemon could have up to two different types. This means that a Pokemon can appear twice in different categories as a result in here. 
 
 ```{r plot}
 grouped_type <-  
   stats_types_df |> 
+  distinct(name, type) |> 
   group_by(type) |> 
   summarise(count = n()) |> 
     arrange(desc(count))
