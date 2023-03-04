@@ -3,8 +3,8 @@ title: "Pokemon"
 author: "John Cruz"
 date: "2023-03-01"
 output: 
-  pdf_document: default
   html_document: default
+  pdf_document: default
 urlcolor: blue
 ---
 
@@ -33,7 +33,7 @@ library(janitor)
 
 ## Web Scrape Table into Data Frame
 
-At first, when the table was web scraped, it brought in the values into a Data Frame, however, I quickly realized that the abilities listed multiple ones and the *rvest()* package cleaned it up by adding a space between them. This causes issues as some abilities are multiple words so to string manipulate them, I needed to account for the built-in HTML line breaks (<br>). To do this, I used XML to add an intentional new line character (\n), so that I could be able to break them apart later. 
+At first, when the table was web scraped, it brought in the values into a Data Frame, however, I quickly realized that the abilities listed multiple ones and the *rvest()* package cleaned it up by adding a space between them. This causes issues as some abilities are multiple words so to string manipulate them, I needed to account for the built-in HTML line breaks (<br>). To do this, I used XML to add an intentional new line character ("\\n"), so that I could be able to break them apart later. 
 
 [Using XML](https://stackoverflow.com/questions/30921626/can-rvest-keep-inline-html-tags-such-as-br-using-html-table)
 
@@ -63,7 +63,7 @@ knitr::kable(head(pokemon_stats))
 
 ## Tidy Up Data
 
-Every other row that was brought into the Data Frame had *N/A* values. I removed these rows where if any Pokemon didn't have a name, it was dropped. The columns between *Name* and the *Base Stats* also were shifted to the right by one column. Using a vector, I moved the columns to the appropriate alignment and followed it by using the *janiotr* package to clean up column names. To account for multiple abilities, the data frame was then unpivoted into a longer format for each Pokemon. 
+Every other row that was brought into the Data Frame had *N/A* values. I removed these rows where if any Pokemon didn't have a name, it was dropped. The columns between *Name* and the *Base Stats* also were shifted to the right by one column. Using a vector, I moved the columns to the appropriate alignment and followed it by using the *janitor* package to clean up column names. To account for multiple abilities, the data frame was then unpivoted into a longer format for each Pokemon. 
 
 **Note:** Pokemon types are missing and the column was dropped. It will be explained in the following section.
 
@@ -108,7 +108,7 @@ knitr::kable(head(stats_df))
 
 ## Pokemon Types Missing
 
-While working on the Data Frame, I realized the Pokemon types were missing. Looking into the HTML code, the types were not text, but images with no conventional tag name for each one. Beause of this, I used another website that provides that information and web scraped similarly into another Data Frame.
+While working on the Data Frame, I realized the Pokemon types were missing. Looking into the HTML code, the types were not text, but images with no conventional tag name for each one. Because of this, I used another website that provides that information and web scraped similarly into another Data Frame.
 
 ```{r read-url-pokemon-types}
 url <- "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_National_Pok%C3%A9dex_number"
