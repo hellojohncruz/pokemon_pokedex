@@ -108,7 +108,7 @@ knitr::kable(head(stats_df))
 
 ## Pokemon Types Missing
 
-While working on the Data Frame, I realized the Pokemon types were missing. Looking into the HTML code, they types were not text, but images with no conventional tag name for each one. Beause of this, I used another website that provides that information and web scraped similarly into another Data Frame.
+While working on the Data Frame, I realized the Pokemon types were missing. Looking into the HTML code, the types were not text, but images with no conventional tag name for each one. Beause of this, I used another website that provides that information and web scraped similarly into another Data Frame.
 
 ```{r read-url-pokemon-types}
 url <- "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_National_Pok%C3%A9dex_number"
