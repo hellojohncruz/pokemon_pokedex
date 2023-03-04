@@ -3,9 +3,9 @@ title: "Pokemon"
 author: "John Cruz"
 date: "2023-03-01"
 output: 
-  html_document: default
   pdf_document: default
-url_color: blue
+  html_document: default
+urlcolor: blue
 ---
 
 ```{r setup, include=FALSE}

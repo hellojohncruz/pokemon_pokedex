@@ -1,0 +1,681 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Pokemon},
+  pdfauthor={John Cruz},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Pokemon}
+\author{John Cruz}
+\date{2023-03-01}
+
+\begin{document}
+\maketitle
+
+\hypertarget{introduction}{%
+\subsection{Introduction}\label{introduction}}
+
+The Serebii website provides a list, called the National Pokedex, of all
+the Pokemon in all the games. The table breaks down each Pokemon with a
+unique ID number, name, type, abilities and base stats such as attack
+and defense.
+
+\textbf{Data Sources:}
+\href{https://www.serebii.net/pokemon/nationalpokedex.shtml}{Pokemon
+Stats}
+
+Lets determine a frequency chart of which Pokemon fall into which types
+they are.
+
+\hypertarget{required-libraries}{%
+\subsection{Required Libraries}\label{required-libraries}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(rvest)}
+\FunctionTok{library}\NormalTok{(xml2)}
+\FunctionTok{library}\NormalTok{(janitor)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{web-scrape-table-into-data-frame}{%
+\subsection{Web Scrape Table into Data
+Frame}\label{web-scrape-table-into-data-frame}}
+
+At first, when the table was web scraped, it brought in the values into
+a Data Frame, however, I quickly realized that the abilities listed
+multiple ones and the \emph{rvest()} package cleaned it up by adding a
+space between them. This causes issues as some abilities are multiple
+words so to string manipulate them, I needed to account for the built-in
+HTML line breaks (). To do this, I used XML to add an intentional new
+line character (\n), so that I could be able to break them apart later.
+
+\href{https://stackoverflow.com/questions/30921626/can-rvest-keep-inline-html-tags-such-as-br-using-html-table}{Using
+XML}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{url }\OtherTok{\textless{}{-}} \StringTok{"https://www.serebii.net/pokemon/nationalpokedex.shtml"}
+
+\NormalTok{web\_table }\OtherTok{\textless{}{-}} \FunctionTok{read\_html}\NormalTok{(url) }
+
+\CommentTok{\# use XML to account for \textless{}br\textgreater{} with abilities and add \textquotesingle{}\textbackslash{}n\textquotesingle{}}
+\FunctionTok{xml\_find\_all}\NormalTok{(web\_table, }\StringTok{".//br"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{xml\_add\_sibling}\NormalTok{(}\StringTok{"p"}\NormalTok{, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{xml\_find\_all}\NormalTok{(web\_table, }\StringTok{".//br"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{xml\_remove}\NormalTok{() }
+
+\NormalTok{web\_table }\OtherTok{\textless{}{-}} 
+\NormalTok{  web\_table }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{html\_element}\NormalTok{(}\StringTok{\textquotesingle{}.dextable\textquotesingle{}}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{html\_table}\NormalTok{()}
+
+\NormalTok{pokemon\_stats }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(web\_table)}
+
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{head}\NormalTok{(pokemon\_stats))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0603}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0345}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0431}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0862}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0862}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.1810}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0948}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0948}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0948}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0948}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0948}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0345}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+X1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X2
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X3
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X4
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X5
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X6
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X7
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X8
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X9
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X10
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X11
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+X12
+\end{minipage} \\
+\midrule()
+\endhead
+No. & Pic & Name & Type & Abilities & Base Stats & Base Stats & Base
+Stats & Base Stats & Base Stats & Base Stats & NA \\
+No. & Pic & Name & Type & Abilities & HP & Att & Def & S.Att & S.Def &
+Spd & NA \\
+\#00001 & & & Bulbasaur & & Overgrow & & & & & & \\
+Chlorophyll & 45 & 49 & 49 & 65 & 65 & 45 & & & & & \\
+& NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA \\
+\#00002 & & & Ivysaur & & Overgrow & & & & & & \\
+Chlorophyll & 60 & 62 & 63 & 80 & 80 & 60 & & & & & \\
+& NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA \\
+\bottomrule()
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{tidy-up-data}{%
+\subsection{Tidy Up Data}\label{tidy-up-data}}
+
+Every other row that was brought into the Data Frame had \emph{N/A}
+values. I removed these rows where if any Pokemon didn't have a name, it
+was dropped. The columns between \emph{Name} and the \emph{Base Stats}
+also were shifted to the right by one column. Using a vector, I moved
+the columns to the appropriate alignment and followed it by using the
+\emph{janiotr} package to clean up column names. To account for multiple
+abilities, the data frame was then unpivoted into a longer format for
+each Pokemon.
+
+\textbf{Note:} Pokemon types are missing and the column was dropped. It
+will be explained in the following section.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# drop null values if Pokemon name is N/A}
+\NormalTok{stats\_df }\OtherTok{\textless{}{-}} 
+\NormalTok{  pokemon\_stats }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{drop\_na}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+
+\CommentTok{\# drop first row (duplicate header) and second column (pic)}
+\NormalTok{stats\_df }\OtherTok{\textless{}{-}}\NormalTok{ stats\_df[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{]}
+
+\CommentTok{\# set column headers from first row and clean names}
+\NormalTok{stats\_df }\OtherTok{\textless{}{-}} 
+\NormalTok{  stats\_df }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{row\_to\_names}\NormalTok{(}\AttributeTok{row\_number =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{clean\_names}\NormalTok{()}
+
+\CommentTok{\# shift pokemon names, etc to left by 1 column}
+\NormalTok{stats\_df[}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\SpecialCharTok{:}\DecValTok{10}\NormalTok{)] }\OtherTok{=}\NormalTok{ stats\_df[, }\FunctionTok{c}\NormalTok{(}\DecValTok{3}\SpecialCharTok{:}\DecValTok{11}\NormalTok{)]}
+
+\CommentTok{\# drop \textquotesingle{}na\textquotesingle{} column}
+\NormalTok{stats\_df }\OtherTok{\textless{}{-}} 
+\NormalTok{  stats\_df }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{c}\NormalTok{(na, type))}
+
+\CommentTok{\# split multiple abilities into long format based on created \textquotesingle{}\textbackslash{}n\textquotesingle{}}
+\NormalTok{stats\_df }\OtherTok{\textless{}{-}} 
+\NormalTok{  stats\_df }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{separate\_longer\_delim}\NormalTok{(abilities, }\AttributeTok{delim =} \StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\CommentTok{\# change to pokemon number}
+\NormalTok{stats\_df}\SpecialCharTok{$}\NormalTok{no }\OtherTok{\textless{}{-}}
+  \FunctionTok{parse\_number}\NormalTok{(stats\_df}\SpecialCharTok{$}\NormalTok{no)}
+
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{head}\NormalTok{(stats\_df))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rlllllllr@{}}
+\toprule()
+no & name & abilities & hp & att & def & s\_att & s\_def & spd \\
+\midrule()
+\endhead
+1 & Bulbasaur & Overgrow & 45 & 49 & 49 & 65 & 65 & 45 \\
+1 & Bulbasaur & Chlorophyll & 45 & 49 & 49 & 65 & 65 & 45 \\
+2 & Ivysaur & Overgrow & 60 & 62 & 63 & 80 & 80 & 60 \\
+2 & Ivysaur & Chlorophyll & 60 & 62 & 63 & 80 & 80 & 60 \\
+3 & Venusaur & Overgrow & 80 & 82 & 83 & 100 & 100 & 80 \\
+3 & Venusaur & Chlorophyll & 80 & 82 & 83 & 100 & 100 & 80 \\
+\bottomrule()
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{pokemon-types-missing}{%
+\subsection{Pokemon Types Missing}\label{pokemon-types-missing}}
+
+While working on the Data Frame, I realized the Pokemon types were
+missing. Looking into the HTML code, the types were not text, but images
+with no conventional tag name for each one. Beause of this, I used
+another website that provides that information and web scraped similarly
+into another Data Frame.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{url }\OtherTok{\textless{}{-}} \StringTok{"https://bulbapedia.bulbagarden.net/wiki/List\_of\_Pok\%C3\%A9mon\_by\_National\_Pok\%C3\%A9dex\_number"}
+
+\NormalTok{web\_table }\OtherTok{\textless{}{-}} \FunctionTok{read\_html}\NormalTok{(url) }
+
+\CommentTok{\# use XML to account for \textless{}br\textgreater{} and replace with \textquotesingle{}\textbackslash{}n\textquotesingle{}}
+\FunctionTok{xml\_find\_all}\NormalTok{(web\_table, }\StringTok{".//br"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{xml\_add\_sibling}\NormalTok{(}\StringTok{"p"}\NormalTok{, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{xml\_find\_all}\NormalTok{(web\_table, }\StringTok{".//br"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{xml\_remove}\NormalTok{() }
+
+\NormalTok{web\_table }\OtherTok{\textless{}{-}} 
+\NormalTok{  web\_table }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{html\_element}\NormalTok{(}\StringTok{\textquotesingle{}body\textquotesingle{}}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{html\_table}\NormalTok{()}
+
+\NormalTok{pokemon\_types }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(web\_table)}
+
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{head}\NormalTok{(pokemon\_types))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.1436}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0166}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0608}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0331}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0387}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0166}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0166}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0166}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0166}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 74\tabcolsep) * \real{0.0221}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+X1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X2
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X3
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X4
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X5
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X6
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X7
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X8
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X9
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X10
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X11
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X12
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X13
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X14
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X15
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X16
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X17
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X18
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X19
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X20
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X21
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X22
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X23
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X24
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X25
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X26
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X27
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X28
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X29
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X30
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X31
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X32
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X33
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X34
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X35
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X36
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X37
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+X38
+\end{minipage} \\
+\midrule()
+\endhead
+Shortcuts & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & &
+& & & & & & \\
+\bottomrule()
+\end{longtable}
+
+Ndex Olddex Natdex \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar{} \textbar Ndex \textbar MS
+\textbar Pokémon \textbar Type \textbar Type \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar{} \textbar\#0001 \textbar{} \textbar Bulbasaur
+\textbar Grass \textbar Poison \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar{} \textbar\#0002 \textbar{} \textbar Ivysaur \textbar Grass
+\textbar Poison \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar{}
+\textbar\#0003 \textbar{} \textbar Venusaur \textbar Grass
+\textbar Poison \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar{}
+\textbar\#0004 \textbar{} \textbar Charmander \textbar Fire
+\textbar Fire \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar NA
+\textbar NA \textbar NA \textbar NA \textbar NA \textbar NA \textbar{}
+
+Since each Pokemon has a unique identifier, I created the data frame to
+relate this ID to its types.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# drop null values if Pokemon name is N/A}
+\NormalTok{types\_df }\OtherTok{\textless{}{-}} 
+\NormalTok{  pokemon\_types }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{drop\_na}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+
+\CommentTok{\# drop unnecessary columns}
+\NormalTok{types\_df }\OtherTok{\textless{}{-}} 
+\NormalTok{  types\_df[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
+
+\CommentTok{\# set column headers from first row and clean names}
+\NormalTok{types\_df }\OtherTok{\textless{}{-}} 
+\NormalTok{  types\_df }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{row\_to\_names}\NormalTok{(}\AttributeTok{row\_number =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{clean\_names}\NormalTok{()}
+
+\CommentTok{\# change to pokemon number}
+\NormalTok{types\_df}\SpecialCharTok{$}\NormalTok{ndex }\OtherTok{\textless{}{-}}
+  \FunctionTok{parse\_number}\NormalTok{(types\_df}\SpecialCharTok{$}\NormalTok{ndex)}
+
+\CommentTok{\# drop N/A or zero (0) while keeping only distinct pokemon numbers}
+\NormalTok{types\_df }\OtherTok{\textless{}{-}} 
+\NormalTok{  types\_df }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(ndex }\SpecialCharTok{!=} \DecValTok{0}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{distinct}\NormalTok{(ndex, }\AttributeTok{.keep\_all=}\ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# within same pokemon number, replace repeated types with N/A}
+\NormalTok{types\_df }\OtherTok{\textless{}{-}} 
+\NormalTok{  types\_df }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{type\_2 =} \FunctionTok{if\_else}\NormalTok{(type\_2 }\SpecialCharTok{!=}\NormalTok{ type, type\_2, }\ConstantTok{NA}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{no =}\NormalTok{ ndex)}
+
+\CommentTok{\# melt both type columns into one column}
+\NormalTok{temp1 }\OtherTok{\textless{}{-}} 
+\NormalTok{  types\_df }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)}
+
+\NormalTok{temp2 }\OtherTok{\textless{}{-}} 
+\NormalTok{  types\_df }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{type =}\NormalTok{ type\_2)}
+
+\NormalTok{types\_df }\OtherTok{\textless{}{-}} 
+\NormalTok{  temp1 }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{full\_join}\NormalTok{(temp2) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{!}\NormalTok{pokemon) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{arrange}\NormalTok{(no)}
+
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{head}\NormalTok{(types\_df))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rl@{}}
+\toprule()
+no & type \\
+\midrule()
+\endhead
+1 & Grass \\
+1 & Poison \\
+2 & Grass \\
+2 & Poison \\
+3 & Grass \\
+3 & Poison \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{merge-pokemon-stats-and-types-tables}{%
+\subsection{Merge Pokemon Stats and Types
+Tables}\label{merge-pokemon-stats-and-types-tables}}
+
+Using a similar way of SQL joins, I merged the Pokemon to its types and
+stats.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stats\_types\_df }\OtherTok{\textless{}{-}}  
+\NormalTok{  stats\_df }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{inner\_join}\NormalTok{(types\_df) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{relocate}\NormalTok{(type, }\AttributeTok{.after =}\NormalTok{ name)}
+
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{head}\NormalTok{(stats\_types\_df))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rllllllllr@{}}
+\toprule()
+no & name & type & abilities & hp & att & def & s\_att & s\_def & spd \\
+\midrule()
+\endhead
+1 & Bulbasaur & Grass & Overgrow & 45 & 49 & 49 & 65 & 65 & 45 \\
+1 & Bulbasaur & Poison & Overgrow & 45 & 49 & 49 & 65 & 65 & 45 \\
+1 & Bulbasaur & Grass & Chlorophyll & 45 & 49 & 49 & 65 & 65 & 45 \\
+1 & Bulbasaur & Poison & Chlorophyll & 45 & 49 & 49 & 65 & 65 & 45 \\
+2 & Ivysaur & Grass & Overgrow & 60 & 62 & 63 & 80 & 80 & 60 \\
+2 & Ivysaur & Poison & Overgrow & 60 & 62 & 63 & 80 & 80 & 60 \\
+\bottomrule()
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{pokemon-type-frequency}{%
+\subsection{Pokemon Type Frequency}\label{pokemon-type-frequency}}
+
+The frequency chart shows us that \emph{Water, Normal and Grass} types
+are the most common among all the Pokemon. One caveat to point out, is
+that a Pokemon could have up to two different types. This means that a
+Pokemon can appear twice in different categories as a result in here.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grouped\_type }\OtherTok{\textless{}{-}}  
+\NormalTok{  stats\_types\_df }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{distinct}\NormalTok{(name, type) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(type) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(count))}
+
+\NormalTok{grouped\_type }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ count, }\AttributeTok{y =} \FunctionTok{reorder}\NormalTok{(type, count))) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{\textquotesingle{}identity\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pokemon_stats_files/figure-latex/plot-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(grouped\_type)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule()
+type & count \\
+\midrule()
+\endhead
+Water & 154 \\
+Normal & 130 \\
+Grass & 122 \\
+Flying & 109 \\
+Psychic & 99 \\
+Bug & 92 \\
+Fire & 80 \\
+Poison & 79 \\
+Ground & 75 \\
+Rock & 73 \\
+Fighting & 72 \\
+Dark & 69 \\
+Electric & 68 \\
+Dragon & 65 \\
+Fairy & 63 \\
+Steel & 63 \\
+Ghost & 62 \\
+Ice & 48 \\
+\bottomrule()
+\end{longtable}
+
+\end{document}

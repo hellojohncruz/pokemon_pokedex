@@ -686,10 +686,10 @@ knitr::kable(head(stats_df))</code></pre>
 <div id="pokemon-types-missing" class="section level2">
 <h2>Pokemon Types Missing</h2>
 <p>While working on the Data Frame, I realized the Pokemon types were
-missing. Looking into the HTML code, they types were not text, but
-images with no conventional tag name for each one. Beause of this, I
-used another website that provides that information and web scraped
-similarly into another Data Frame.</p>
+missing. Looking into the HTML code, the types were not text, but images
+with no conventional tag name for each one. Beause of this, I used
+another website that provides that information and web scraped similarly
+into another Data Frame.</p>
 <pre class="r"><code>url &lt;- &quot;https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_National_Pok%C3%A9dex_number&quot;
 
 web_table &lt;- read_html(url) 
